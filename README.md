@@ -1,40 +1,39 @@
-# 🛡️ Laboratório: Hardening de Windows & Análise de Vulnerabilidades
+# 🛡️ Portfólio de Cibersegurança: Defesa & Monitoramento
 
-## 🎯 Objetivo
-Reduzir a superfície de ataque de uma estação Windows 11, identificando portas abertas com Kali Linux (Nmap) e mitigando os serviços desnecessários.
-
-## 🛠️ Ferramentas Utilizadas
-* **Atacante:** Kali Linux (Nmap)
-* **Alvo:** Windows 11
-* **Defesa:** PowerShell, Firewall do Windows, Configurações de Serviços (dcomcnfg).
-
-## 📊 Passo a Passo
-
-### 1. Reconhecimento (Scan Inicial)
-Realizei um scan agressivo na rede interna para identificar portas expostas.
-* **Comando:** `nmap -Pn 192.168.15.181`
-* **Resultado:** Encontradas portas críticas abertas: 139 (NetBIOS), 445 (SMB) e 7070 (AnyDesk).
-
-![Print do Nmap Inicial](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/Nmap%20Scan.png?raw=true)
-
-### 2. Análise Forense (Identificação de Processos)
-Antes de bloquear, investiguei quais processos estavam utilizando as portas suspeitas usando o PowerShell.
-* **Comando:** `Get-NetTCPConnection` combinado com `Get-Process`.
-* **Descoberta:** Identifiquei que a porta 7070 pertencia ao processo do AnyDesk (PID 4020) e a porta 135 ao sistema (svchost).
-
-![Análise de Processos](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/image_d9ecc7.png?raw=true)
-
-### 3. Hardening (Ações de Defesa)
-Para mitigar os riscos, executei os seguintes procedimentos:
-* **SMB (445):** Desativado via configurações da Placa de Rede.
-* **NetBIOS (139):** Desativado nas configurações de TCP/IP.
-* **AnyDesk (7070):** Serviço parado e desabilitado.
-* **Firewall:** Criação de regra de bloqueio total ("Bloqueio Lab Cyber") para conexões de entrada.
-
-![Configuração do Firewall](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/image_dac201.png?raw=true)
-
-### 4. Conclusão e Resultados
-Após as configurações, rodei um novo scan que confirmou o fechamento das portas críticas (445, 139 e 7070), reduzindo drasticamente a exposição da máquina.
+## 📋 Resumo
+Repositório dedicado à documentação de laboratórios práticos de Blue Team, focados em Hardening de Sistemas Operacionais e Monitoramento de Eventos de Segurança.
 
 ---
-*Laboratório realizado por [Bragaart](https://github.com/Bragaart)*
+
+## 🚀 Laboratório 1: Hardening de Windows 11
+**Objetivo:** Reduzir a superfície de ataque identificando portas abertas e mitigando serviços vulneráveis.
+
+### 🛠️ Ferramentas
+* **Kali Linux (Nmap):** Scan de portas.
+* **PowerShell:** Configuração de Firewall e análise de processos.
+
+### 📊 Execução
+1.  **Reconhecimento:** O scan inicial identificou as portas 139 (NetBIOS), 445 (SMB) e 7070 (AnyDesk) abertas.
+![Scan Inicial Nmap](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/Nmap%20Scan.png?raw=true)
+
+2.  **Análise Forense:** Identificação dos processos atrelados às portas via comando `Get-NetTCPConnection`.
+![Análise de Processos](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/image_d9ecc7.png?raw=true)
+
+3.  **Mitigação:** Bloqueio de entrada no Firewall, desativação do SMB/NetBIOS e parada do serviço AnyDesk.
+![Regra de Firewall](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/image_dac201.png?raw=true)
+
+---
+
+## 👁️ Laboratório 2: Auditoria e Logs (SIEM Básico)
+**Objetivo:** Configurar o Windows para registrar tentativas de intrusão e identificar falhas de autenticação.
+
+### 📊 Execução
+1.  **Configuração de Auditoria:** Ativação de logs de falha de logon via `auditpol`.
+    * Comando: `auditpol /set /subcategory:"Logon" /failure:enable`
+2.  **Simulação de Ataque:** Tentativa de acesso com credenciais incorretas (Brute-force manual).
+3.  **Detecção:** Identificação do **Event ID 4625** (Falha de Logon) no Visualizador de Eventos, registrando a tentativa de acesso não autorizado.
+
+![Log de Evento 4625](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/Logs.png.png?raw=true)
+
+---
+*Laboratórios realizados por [Bragaart](https://github.com/Bragaart)*
