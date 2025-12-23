@@ -50,4 +50,17 @@ Repositório dedicado à documentação de laboratórios práticos de Cibersegur
 ![Hash Modificado](https://github.com/Bragaart/Cybersecurity-Labs/blob/main/Hash_Modificado.png.png?raw=true)
 
 ---
+
+## 🛡️ Laboratório 5: Gestão de Vulnerabilidades (DAST)
+
+**Objetivo:** Identificar vulnerabilidades conhecidas em aplicações web utilizando varredura automatizada (DAST) para mitigar riscos antes de um ataque real.
+
+### 📊 Execução
+
+1. **Varredura Automatizada:** Execução do **OWASP ZAP** contra o ambiente de testes `testphp.vulnweb.com`.
+2. **Análise de Riscos:** O scan detectou **14 alertas**, indicando falhas na configuração do servidor.
+3. **Vulnerabilidade Principal:** Identificada a ausência de **Content Security Policy (CSP)**.
+   * *Impacto:* Sem o cabeçalho CSP, a aplicação não valida a origem dos scripts, deixando o sistema vulnerável a ataques de **Cross-Site Scripting (XSS)** e injeção de dados.
+
+![Análise de Vulnerabilidade ZAP](Zaproxy%20CSP%20.png)
 *Laboratórios realizados por [Bragaart](https://github.com/Bragaart)*
